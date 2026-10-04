@@ -6,6 +6,7 @@ import sys
 from sklearn.preprocessing import OneHotEncoder,StandardScaler,OrdinalEncoder,FunctionTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
 
 from src.exception import customException
 from src.logger import logging
@@ -46,6 +47,7 @@ class DataTransformation:
             ])
 
             num_pipeline = Pipeline(steps=[
+                ('imputer', SimpleImputer(strategy='median')),
                 ('scaler',StandardScaler())
             ])  
 
@@ -89,7 +91,7 @@ class DataTransformation:
 
             for df in [train_df, test_df]:
                 df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
-                df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+                df['TotalCharges'].fillna(df['TotalCharges'].median())
 
             logging.info("Converted TotalCharges to numeric and handled missing values.")
 
@@ -149,10 +151,3 @@ class DataTransformation:
         except Exception as e:
             raise customException(e,sys)
 
-
-if __name__ == "__main__":
-    obj = DataTransformation()
-    obj.initiate_data_transformation(
-        train_path='artifacts/train.csv',
-        test_path='artifacts/test.csv'
-    )
