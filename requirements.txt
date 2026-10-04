@@ -7,4 +7,5 @@ seaborn
 xgboost
 lightgbm
 optuna
+pickledb
 -e .
