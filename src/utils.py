@@ -1,6 +1,7 @@
 import os
 import sys 
 import pickle
+import dill
 
 from sklearn.model_selection import GridSearchCV
 from src.exception import customException
@@ -47,3 +48,7 @@ def evaluate_models(X_train,y_train,X_test,y_test,models,param,threshold):
         return model_report
     except Exception as e:
         raise customException(e,sys)
+
+def load_object(file_path):
+    with open(file_path,"rb") as file_obj:
+        return pickle.load(file_obj)

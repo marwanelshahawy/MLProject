@@ -8,4 +8,6 @@ xgboost
 lightgbm
 optuna
 pickledb
+catboost
+dill
 -e .
