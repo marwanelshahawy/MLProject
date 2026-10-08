@@ -10,4 +10,6 @@ optuna
 pickledb
 catboost
 dill
+uvicorn
+fastapi
 -e .
